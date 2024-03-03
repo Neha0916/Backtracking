@@ -10,24 +10,16 @@ public class coinChange2 {
         for(int i=0;i<n;i++){
             num[i]=sc.nextInt();
         }
-        totalCoin(num,0,coin,0,"");
+        totalCoin(num,coin,0,"");
     }
-    public static void totalCoin(int[]num,int sum,int coin,int i,String s){
-        if(i==num.length){
-            if(sum==coin) System.out.println(s);
+    public static void totalCoin(int[]num,int sum,int i,String s){
+        if(sum==0){
+            System.out.println(s);
             return;
         }
-//        if(sum==coin) {
-//            System.out.println(s);
-//            return;
-//        }
-        for(int j=sum/num[i];j>=1;j--){
-            String add="";
-            for(int k=0;k<j;k++){
-                add+=" "+num[i];
-            }
-            totalCoin(num,sum+num[i]*j,coin,i+1,s+" "+add);
-        }
-        totalCoin(num,sum,coin,i+1,s);
+        if(sum<0) return;
+        if(i>=num.length) return;
+        totalCoin(num,sum-num[i],i,s+" "+num[i]);
+        totalCoin(num,sum,i+1,s);
     }
 }

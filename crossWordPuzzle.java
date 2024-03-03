@@ -24,25 +24,29 @@ public class crossWordPuzzle {
         crosswordPuzzle(crossWord,arr,0);
     }
     public static void crosswordPuzzle(String[][]crossWord,String[]arr,int ind){
-        if(ind==arr.length)
+        if(ind>=arr.length)
         {
+            System.out.println("Solution found:");
             print(crossWord);
             return;
         }
-        System.out.println(ind);
+//        System.out.println(ind);
         String word=arr[ind];
+        System.out.println("Trying to place word: " + word);
 //        System.out.println(word);
         for(int i=0;i<crossWord.length;i++){
             for(int j=0;j<crossWord[0].length;j++){
-
+                System.out.println("Checking position: [" + i + "," + j + "]");
 //                System.out.println(isWordPossibleHorizontal(crossWord,word,i,j)+" "+isWordPossibleVertical(crossWord,word,i,j));
                if(crossWord[i][j].equals("-")||crossWord[i][j].equals(word.charAt(0))){
                    if(isWordPossibleHorizontal(crossWord,word,i,j)){
+                       System.out.println("Placing word horizontally at position: [" + i + "," + j + "]");
                        boolean bool[]=placeWordHorizontal(crossWord,word,i,j);
                        crosswordPuzzle(crossWord,arr,ind+1);
                        unPlaceWordHorizontal(crossWord,bool,i,j);
                    }
                    else if(isWordPossibleVertical(crossWord,word,i,j)){
+                       System.out.println("Placing word vertically at position: [" + i + "," + j + "]");
                        boolean bool[]=placeWordVertical(crossWord,word,i,j);
                        crosswordPuzzle(crossWord,arr,ind+1);
                        unPlaceWordVertical(crossWord,bool,i,j);
@@ -91,7 +95,7 @@ public class crossWordPuzzle {
         boolean []bool=new boolean[word.length()];
         for(int jj=0;jj<word.length();jj++){
             if(crossWord[i][j+jj].equals("-")){
-                crossWord[i][j+jj]=word.charAt(jj)+"";
+                crossWord[i][j+jj]=word.substring(jj,jj+1);
                 bool[jj]=true;
             }
         }
@@ -101,7 +105,7 @@ public class crossWordPuzzle {
         boolean []bool=new boolean[word.length()];
         for(int ii=0;ii<word.length();ii++){
             if(crossWord[i+ii][j].equals("-")){
-                crossWord[i+ii][j]=word.charAt(ii)+"";
+                crossWord[i+ii][j]=word.substring(ii,ii+1);
                 bool[ii]=true;
             }
         }
@@ -109,15 +113,15 @@ public class crossWordPuzzle {
     }
     public static void unPlaceWordHorizontal(String [][]crossWord,boolean[]bool,int i,int j){
         for(int ii=0;ii<bool.length;ii++){
-            if(bool[ii]&&(i+ii)>crossWord.length){
-                crossWord[i+ii][j]="-";
+            if(bool[ii]){
+                crossWord[i][j+ii]="-";
             }
         }
     }
     public static void unPlaceWordVertical(String [][]crossWord,boolean[]bool,int i,int j){
         for(int jj=0;jj<bool.length;jj++){
-            if(bool[jj]&&(j+jj)<crossWord.length){
-                crossWord[i][j+jj]="-";
+            if(bool[jj]){
+                crossWord[i+jj][j]="-";
             }
         }
     }
@@ -126,7 +130,7 @@ public class crossWordPuzzle {
             for(int j=0;j<crossWord[0].length;j++){
                 System.out.print(crossWord[i][j]);
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 }
